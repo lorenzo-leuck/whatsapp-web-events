@@ -3,7 +3,7 @@ const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
 const { Buttons, Message } = require("whatsapp-web.js/src/structures");
 
 const clientPathFolder = {
-  clientId: "10" + "-" + "5551993810619",
+  clientId: "10" + "-" + "5551982211460",
   dataPath: "./.wwebjs_auth",
 };
 
