@@ -2,20 +2,16 @@ const qrcode = require("qrcode-terminal");
 const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
 const { Buttons, Message } = require("whatsapp-web.js/src/structures");
 
-const botSettings = {
-  message: "string",
-  title: "string",
-  button: "string",
+const clientPathFolder = {
+  clientId: "10" + "-" + "5551982211460",
+  dataPath: "./.wwebjs_auth",
 };
 
-const ctaButton = new Buttons(
-  botSettings,
-  [{ body: botSettings.button, url: "wwww.google.com" }],
-  botSettings.title ? botSettings.title : null,
-  null
-);
+const client = new Client({
+  authStrategy: new LocalAuth(clientPathFolder),
+  puppeteer: { headless: false },
+});
 
-const TEST_GROUP = "GROUP_ID"; // modify
 const buttons_reply = new Buttons(
   "test",
   [{ body: "Test", id: "test-1" }],
@@ -76,23 +72,13 @@ const section = {
   ],
 };
 
-const clientPathFolder = {
-  clientId: "10" + "-" + "5551982211460",
-  dataPath: "./.wwebjs_auth",
-};
-
-const client = new Client({
-  authStrategy: new LocalAuth(clientPathFolder),
-  puppeteer: { headless: true },
-});
-
 // const message = new Message();
 
 client.on("ready", () => {
   // console.log("season ok");
 });
 
-function teste() {
+function authenticate() {
   client.on("qr", (qr) => {
     // console.log("link QR");
     // console.log(qr);
@@ -103,50 +89,44 @@ function teste() {
 client.initialize();
 
 client.on("ready", async () => {
-  const number = client.getNumberId("5551982211460");
-  for (const component of [
-    buttons_reply,
-    buttons_reply_url,
-    buttons_reply_call,
-    buttons_reply_call_url,
-  ])
-    client.sendMessage(number, component);
+  const number = await client.getNumberId("5551982211460");
+
+  // console.log(number);
+  await client.sendMessage(number._serialized, buttons_reply);
+  await client.sendMessage(number._serialized, buttons_reply_url);
+  await client.sendMessage(number._serialized, buttons_reply_call);
+  await client.sendMessage(number._serialized, buttons_reply_call_url);
 });
 
-// client.on("ready", async () => {
-//   const number = await client.getNumberId("5551982211460");
+client.on("message", (msg) => {
+  console.log("----------------msg_create------------------");
+  console.log(msg);
+  // console.log("mensagem de: ", msg.from, "Texto: ", msg.body);
+  // if (msg.body === "Test") {
+  //   // message.links([{ link: "www.youtube.co m", isSuspicious: false }]);
+  // }
 
-//   // console.log(number);
-//   await client.sendMessage(number._serialized, "Teste!");
-// });
+  console.log("-----------------------------------------------");
 
-// client.on("message_create", (msg) => {
-//   console.log("-----------message_create--------");
+  msg.getMentions;
+  if (msg.body == "r") {
+    let button = new Buttons(
+      "Olá",
+      [{ id: "yes", body: "sim" }],
+      "Pergunta de fidelização",
+      "att: Fidelizou.me"
+    );
 
-//   console.log(msg);
-//   // console.log("mensagem de: ", msg.from, "Texto: ", msg.body);
-//   // if (msg.body === "Test") {
-//   //   // message.links([{ link: "www.youtube.co m", isSuspicious: false }]);
-//   // }
-//   msg.getMentions;
-//   if (msg.body == "q") {
-//     let button = new Buttons(
-//       "fmmmmmm",
-//       [{ id: "yes", body: "sim" }],
-//       "Pergunta de fidelização",
-//       "att: Fidelizou.me"
-//     );
+    client.sendMessage(msg.from, button);
+  }
 
-//     client.sendMessage(msg.from, "asad");
-//   }
+  if (msg.body === "sim") {
+    let message = "https://app.fidelizou.me/a/2989/";
 
-//   if (msg.body === "sim") {
-//     let message = "https://app.fidelizou.me/a/2989/";
+    // message.links([{ link: "www.youtube.com", isSuspicious: false }]);
 
-//     // message.links([{ link: "www.youtube.com", isSuspicious: false }]);
+    client.sendMessage(msg.from, message);
+  }
+});
 
-//     client.sendMessage(msg.from, message);
-//   }
-// });
-
-// // teste();
+// authenticate();
