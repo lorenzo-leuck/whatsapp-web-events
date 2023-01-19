@@ -74,10 +74,6 @@ const section = {
 
 // const message = new Message();
 
-client.on("ready", () => {
-  // console.log("season ok");
-});
-
 function authenticate() {
   client.on("qr", (qr) => {
     // console.log("link QR");
@@ -89,44 +85,70 @@ function authenticate() {
 client.initialize();
 
 client.on("ready", async () => {
-  const number = await client.getNumberId("5551982211460");
+  const number = await client.getNumberId("555181559667");
 
   // console.log(number);
-  await client.sendMessage(number._serialized, buttons_reply);
-  await client.sendMessage(number._serialized, buttons_reply_url);
-  await client.sendMessage(number._serialized, buttons_reply_call);
-  await client.sendMessage(number._serialized, buttons_reply_call_url);
+  await client.sendMessage(number._serialized, "teste");
+  // await client.sendMessage(number._serialized, buttons_reply);
+  // await client.sendMessage(number._serialized, buttons_reply_url);
+  // await client.sendMessage(number._serialized, buttons_reply_call);
+  // await client.sendMessage(number._serialized, buttons_reply_call_url);
+
+  client.on("message_create", (msg) => {
+    let info = msg.getInfo();
+    console.log(info);
+  });
 });
 
-client.on("message", (msg) => {
-  console.log("----------------msg_create------------------");
-  console.log(msg);
-  // console.log("mensagem de: ", msg.from, "Texto: ", msg.body);
-  // if (msg.body === "Test") {
-  //   // message.links([{ link: "www.youtube.co m", isSuspicious: false }]);
-  // }
+// client.on("message_create", async (msg) => {
+// console.log("----------------msg_info------------------");
+// let info = await msg.getInfo();
+// console.log(msg);
+// console.log(info);
+// console.log(message.getInfo());
+// const info = await msg.getInfo();
+// console.log(info);
+// console.log("------------------------------------------");
+// console.log("mensagem de: ", msg.from, "Texto: ", msg.body);
+// if (msg.body === "Test") {
+//   // message.links([{ link: "www.youtube.co m", isSuspicious: false }]);
+// }
+// const resolveStatusTimestamp = async (msg) => {
+//   let info = await msg.getInfo();
+//   switch (message.ack) {
+//     case ACK_DEVICE:
+//       return info["delivery"][0].t;
+//     case ACK_READ:
+//       return info["read"][0].t;
+//     case ACK_PLAYED:
+//       return info["played"][0].t;
+//     default:
+//       return null;
+//   }
+// };
+// console.log(resolveStatusTimestamp);
+// msg.getMentions;
+// if (msg.body == "r") {
+//   let button = new Buttons(
+//     "Olá",
+//     [{ id: "yes", body: "sim" }],
+//     "Pergunta de fidelização",
+//     "att: Fidelizou.me"
+//   );
+//   client.sendMessage(msg.from, button);
+// }
+// if (msg.body === "sim") {
+//   let message = "https://app.fidelizou.me/a/2989/";
+//   // message.links([{ link: "www.youtube.com", isSuspicious: false }]);
+//   client.sendMessage(msg.from, message);
+// }
+// });
 
-  console.log("-----------------------------------------------");
-
-  msg.getMentions;
-  if (msg.body == "r") {
-    let button = new Buttons(
-      "Olá",
-      [{ id: "yes", body: "sim" }],
-      "Pergunta de fidelização",
-      "att: Fidelizou.me"
-    );
-
-    client.sendMessage(msg.from, button);
-  }
-
-  if (msg.body === "sim") {
-    let message = "https://app.fidelizou.me/a/2989/";
-
-    // message.links([{ link: "www.youtube.com", isSuspicious: false }]);
-
-    client.sendMessage(msg.from, message);
-  }
-});
+// client.on("message_ack", (ack) => {
+//   console.log(
+//     ">>>>>>>>>>>>>>>>>>>>>>>> msg_ack <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+//   );
+//   console.log(ack);
+// });
 
 // authenticate();
