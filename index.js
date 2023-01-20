@@ -9,7 +9,7 @@ const clientPathFolder = {
 
 const client = new Client({
   authStrategy: new LocalAuth(clientPathFolder),
-  puppeteer: { headless: false },
+  puppeteer: { headless: true },
 });
 
 function authenticate() {
@@ -21,16 +21,23 @@ function authenticate() {
 client.initialize();
 
 client.on("ready", async () => {
-  const number = await client.getNumberId("5551982211460");
+  const number = await client.getNumberId("555181559667");
 
   await client.sendMessage(number._serialized, "teste");
 });
 
-client.on("message_create", async (msg) => {
-  let chat = await msg.getInfo();
+// client.on("message_create", async (msg) => {
+//   let chat = await msg.getInfo();
 
-  console.log("----------------msg_info------------------");
-  console.log(chat);
+//   console.log("----------------msg_info------------------");
+//   console.log(chat);
+//   console.log("------------------------------------------");
+// });
+
+client.on("message_ack", async (msg) => {
+  console.log("----------------msg_ack------------------");
+  console.log(msg.to);
+  console.log(msg.ack);
   console.log("------------------------------------------");
 });
 
