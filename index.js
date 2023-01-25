@@ -50,45 +50,99 @@ function authenticate() {
 
 client.initialize();
 
+let numberArray = [
+  "5551981558124",
+  "5551981558241",
+  "5551981558521",
+  "5551981558618",
+  "5551981558728",
+  "5551981559667",
+  "5551981571092",
+];
+
+let teste = {};
+
+// const number = await client.getNumberId(element);
+
 client.on("ready", async () => {
-  // iphone
-  // const number = await client.getNumberId("555184498643");
-  // android
-  const number = await client.getNumberId("555181559667");
-  // const number = await client.getNumberId("5551982211460");
+  const number1 = await client.getNumberId("5551981558124");
+  const number2 = await client.getNumberId("5551981558241");
+  const number3 = await client.getNumberId("5551981558521");
+  const number4 = await client.getNumberId("5551981558618");
+  const number5 = await client.getNumberId("5551981558728");
+  const number6 = await client.getNumberId("5551981559667");
+  const number7 = await client.getNumberId("5551981571092");
 
-  await client.sendMessage(number._serialized, "teste");
+  const number1z = await client.isRegisteredUser("5551981558124@c.us");
+  const number2z = await client.isRegisteredUser("5551981558241@c.us");
+  const number3z = await client.isRegisteredUser("5551981558521@c.us");
+  const number4z = await client.isRegisteredUser("5551981558618@c.us");
+  const number5z = await client.isRegisteredUser("5551981558728@c.us");
+  const number6z = await client.isRegisteredUser("5551981559667@c.us");
+  const number7z = await client.isRegisteredUser("5551981571092@c.us");
+
+  teste = {
+    5551981558124: number1z,
+    5551981558241: number2z,
+    5551981558521: number3z,
+    5551981558618: number4z,
+    5551981558728: number5z,
+    5551981559667: number6z,
+    5551981571092: number7z,
+  };
+
+  console.log(teste);
 });
 
-client.on("message_create", async (msg) => {
-  // console.log("----------------msg_info------------------");
-  // console.log(msg);
-  // console.log("------------------------------------------");
+// numberArray.forEach((element) => {
+//   client.on("ready", async () => {
+//     const number = await client.getNumberId(element);
 
-  setInterval(() => {
-    let info = msg.getInfo();
+//     teste[element] = number;
+//   });
+// });
 
-    console.log("----------------msg_info------------------");
-    console.log(info);
-    console.log("------------------------------------------");
-  }, 1000);
-});
+// console.log(teste);
 
-client.on("message_ack", async (msg) => {
-  let info = await msg.getInfo();
+// client.on("ready", async () => {
 
-  setInterval(() => {
-    console.log("----------------msg_ack------------------");
+// iphone
+// const number = await client.getNumberId("555184498643");
+// android
 
-    contato = {};
+// const number = await client.getNumberId("5551982211460");
 
-    contato[msg.to] = msg.ack;
-    //   let info = await msg.getInfo();
+// await client.sendMessage(number._serialized, "teste leitura");
+// });
 
-    console.log(info);
-    console.log("------------------------------------------");
-  }, 1000);
-});
+// client.on("message_create", async (msg) => {
+//   // console.log("----------------msg_info------------------");
+//   // console.log(msg);
+//   // console.log("------------------------------------------");
+//   let info = await msg.getInfo();
+
+//   setInterval(() => {
+//     console.log("----------------msg_info------------------");
+//     console.log(info);
+//     console.log("------------------------------------------");
+//   }, 1000);
+// });
+
+// client.on("message_ack", async (msg) => {
+//   // let info = await msg.getInfo();
+//   console.log(msg);
+// setInterval(() => {
+//   console.log("----------------msg_ack------------------");
+
+//   // contato = {};
+
+//   // contato[msg.to] = msg.ack;
+//   //   let info = await msg.getInfo();
+
+//   console.log(msg.id.id);
+//   console.log("------------------------------------------");
+// }, 1000);
+// });
 
 // client.on("message", async (msg) => {
 //   console.log("----------------msg_response------------------");
